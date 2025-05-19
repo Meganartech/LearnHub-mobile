@@ -11,7 +11,7 @@ import 'package:http/http.dart' as http;
 import '../url.dart';
 import 'WelcomePage.dart';
 import 'payment.dart';
-import 'trainer_selection_screen.dart';
+
 enum CourseFilter {
   all,
   free,
