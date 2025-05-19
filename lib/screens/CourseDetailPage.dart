@@ -9,15 +9,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
-import 'package:learnhub/screens/WelcomePage.dart';
+
+// import 'package:learnhub/screens/WelcomePage.dart';
 import 'package:video_player/video_player.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 import 'package:chewie/chewie.dart';
 import 'package:learnhub/screens/QuizScreen.dart';
 
-import 'HomePage.dart';
-import 'MeetingPage.dart';
-import 'ProfilePage.dart';
+// import 'HomePage.dart';
+// import 'MeetingPage.dart';
+// import 'ProfilePage.dart';
 class CourseDetailPage extends StatefulWidget {
   final int selectedIndex;
   final Function(int, {
@@ -385,17 +386,17 @@ class _CourseDetailPageState extends State<CourseDetailPage>
   @override
   Widget build(BuildContext context) {
     final topPadding = MediaQuery.of(context).padding.top - 25;
-    final bottomPadding = MediaQuery.of(context).padding.bottom;
-    final double screenWidth = MediaQuery.of(context).size.width;
-    final List<String> _labels = ["Home", "Courses", "Meetings", "Profile"];
-    final List<IconData?> _icons = [
-      Icons.home,
-      null, // Placeholder for image
-      Icons.videocam,
-      Icons.person,
-    ];
-    final int totalItems = _icons.length;
-    final double itemWidth = screenWidth / totalItems;
+    // final bottomPadding = MediaQuery.of(context).padding.bottom;
+    // final double screenWidth = MediaQuery.of(context).size.width;
+    // final List<String> _labels = ["Home", "Courses", "Meetings", "Profile"];
+    // final List<IconData?> _icons = [
+    //   Icons.home,
+    //   null, // Placeholder for image
+    //   Icons.videocam,
+    //   Icons.person,
+    // ];
+    // final int totalItems = _icons.length;
+    // final double itemWidth = screenWidth / totalItems;
 
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: SystemUiOverlayStyle(
@@ -560,132 +561,132 @@ class _CourseDetailPageState extends State<CourseDetailPage>
                         ),
                       ),
                     ),                    
-                    Container(
-  height: 60 + bottomPadding,
-  padding: EdgeInsets.only(bottom: bottomPadding),
-  child: Stack(
-    clipBehavior: Clip.none,
-    children: [
-      CustomPaint(
-        size: Size(screenWidth, 70),
-        painter: BottomNavBarPainter(widget.selectedIndex, totalItems),
-      ),
-      Positioned(
-        top: -30,
-        left: (itemWidth * widget.selectedIndex) + (itemWidth / 2) - 30,
-        child: AnimatedContainer(
-          duration: const Duration(milliseconds: 300),
-          height: 60,
-          width: 60,
-          decoration: BoxDecoration(
-            color: const Color(0xFF4680FE),
-            shape: BoxShape.circle,
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withOpacity(0.2),
-                blurRadius: 10,
-                spreadRadius: 1,
-              ),
-            ],
-          ),
-          child: _icons[widget.selectedIndex] == null
-              ? Image.asset('assets/book_icon.png',
-                  width: 24, height: 24, color: Colors.white)
-              : Icon(_icons[widget.selectedIndex],
-                  size: 30, color: Colors.white),
-        ),
-      ),
-      Positioned.fill(
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: List.generate(totalItems, (index) {
-            return GestureDetector(
-              onTap: () {
-                widget.onItemTapped(index);
-                if (index == 1) {
-                  // Stay on CourseDetailPage
-                  widget.onItemTapped(
-                    index,
-                    navigateToDetails: true,
-                  );
-                } else if (index == 2) {
-                  // Navigate to MeetingPage (replace completely)//AndRemoveUntil
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => MeetingPage(
-                        selectedIndex: 2,
-              onItemTapped: (index) {},
-                      ),
-                    ),
-                    // (route) => false,
-                  );
-                } else if (index == 3) {
-                  // Navigate to ProfilePage (replace completely)
-                  Navigator.pushAndRemoveUntil(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => ProfilePage(
-                        selectedIndex: 3,
-                        onItemTapped: widget.onItemTapped,
-                      ),
-                    ),
-                    (route) => false,
-                  );
-                }
-                else if (index == 0) {
-                  // Navigate to ProfilePage (replace completely)
-                  Navigator.pushAndRemoveUntil(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => WelcomePage(
-                        // selectedIndex: 3,
-                        // onItemTapped: widget.onItemTapped,
-                      ),
-                    ),
-                    (route) => false,
-                  );
-                } else {
-                  // Navigate to HomeScreen (replace completely)
-                  Navigator.pushAndRemoveUntil(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => HomeScreen(),
-                    ),
-                    (route) => false,
-                  );
-                }
-              },
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  if (index != widget.selectedIndex)
-                    index == 1
-                        ? Image.asset('assets/book_icon_2.png',
-                            width: 20, height: 20)
-                        : Icon(_icons[index],
-                            size: 24, color: Colors.black),
-                  if (index == widget.selectedIndex)
-                    Padding(
-                      padding: const EdgeInsets.only(top: 35.0),
-                      child: Text(
-                        _labels[index],
-                        style: const TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black),
-                      ),
-                    ),
-                ],
-              ),
-            );
-          }),
-        ),
-      ),
-    ],
-  ),
-),
+//                     Container(
+//   height: 60 + bottomPadding,
+//   padding: EdgeInsets.only(bottom: bottomPadding),
+//   child: Stack(
+//     clipBehavior: Clip.none,
+//     children: [
+//       CustomPaint(
+//         size: Size(screenWidth, 70),
+//         painter: BottomNavBarPainter(widget.selectedIndex, totalItems),
+//       ),
+//       Positioned(
+//         top: -30,
+//         left: (itemWidth * widget.selectedIndex) + (itemWidth / 2) - 30,
+//         child: AnimatedContainer(
+//           duration: const Duration(milliseconds: 300),
+//           height: 60,
+//           width: 60,
+//           decoration: BoxDecoration(
+//             color: const Color(0xFF4680FE),
+//             shape: BoxShape.circle,
+//             boxShadow: [
+//               BoxShadow(
+//                 color: Colors.black.withOpacity(0.2),
+//                 blurRadius: 10,
+//                 spreadRadius: 1,
+//               ),
+//             ],
+//           ),
+//           child: _icons[widget.selectedIndex] == null
+//               ? Image.asset('assets/book_icon.png',
+//                   width: 24, height: 24, color: Colors.white)
+//               : Icon(_icons[widget.selectedIndex],
+//                   size: 30, color: Colors.white),
+//         ),
+//       ),
+//       Positioned.fill(
+//         child: Row(
+//           mainAxisAlignment: MainAxisAlignment.spaceAround,
+//           children: List.generate(totalItems, (index) {
+//             return GestureDetector(
+//               onTap: () {
+//                 widget.onItemTapped(index);
+//                 if (index == 1) {
+//                   // Stay on CourseDetailPage
+//                   widget.onItemTapped(
+//                     index,
+//                     navigateToDetails: true,
+//                   );
+//                 } else if (index == 2) {
+//                   // Navigate to MeetingPage (replace completely)//AndRemoveUntil
+//                   Navigator.pushReplacement(
+//                     context,
+//                     MaterialPageRoute(
+//                       builder: (context) => MeetingPage(
+//                         selectedIndex: 2,
+//               onItemTapped: (index) {},
+//                       ),
+//                     ),
+//                     // (route) => false,
+//                   );
+//                 } else if (index == 3) {
+//                   // Navigate to ProfilePage (replace completely)
+//                   Navigator.pushAndRemoveUntil(
+//                     context,
+//                     MaterialPageRoute(
+//                       builder: (context) => ProfilePage(
+//                         selectedIndex: 3,
+//                         onItemTapped: widget.onItemTapped,
+//                       ),
+//                     ),
+//                     (route) => false,
+//                   );
+//                 }
+//                 else if (index == 0) {
+//                   // Navigate to ProfilePage (replace completely)
+//                   Navigator.pushAndRemoveUntil(
+//                     context,
+//                     MaterialPageRoute(
+//                       builder: (context) => WelcomePage(
+//                         // selectedIndex: 3,
+//                         // onItemTapped: widget.onItemTapped,
+//                       ),
+//                     ),
+//                     (route) => false,
+//                   );
+//                 } else {
+//                   // Navigate to HomeScreen (replace completely)
+//                   Navigator.pushAndRemoveUntil(
+//                     context,
+//                     MaterialPageRoute(
+//                       builder: (context) => HomeScreen(),
+//                     ),
+//                     (route) => false,
+//                   );
+//                 }
+//               },
+//               child: Column(
+//                 mainAxisSize: MainAxisSize.min,
+//                 mainAxisAlignment: MainAxisAlignment.center,
+//                 children: [
+//                   if (index != widget.selectedIndex)
+//                     index == 1
+//                         ? Image.asset('assets/book_icon_2.png',
+//                             width: 20, height: 20)
+//                         : Icon(_icons[index],
+//                             size: 24, color: Colors.black),
+//                   if (index == widget.selectedIndex)
+//                     Padding(
+//                       padding: const EdgeInsets.only(top: 35.0),
+//                       child: Text(
+//                         _labels[index],
+//                         style: const TextStyle(
+//                             fontSize: 14,
+//                             fontWeight: FontWeight.bold,
+//                             color: Colors.black),
+//                       ),
+//                     ),
+//                 ],
+//               ),
+//             );
+//           }),
+//         ),
+//       ),
+//     ],
+//   ),
+// ),
                   ],
                 ),
         ),
@@ -694,63 +695,63 @@ class _CourseDetailPageState extends State<CourseDetailPage>
   }
 }
 
-class BottomNavBarPainter extends CustomPainter {
-  final int selectedIndex;
-  final int totalItems;
+// class BottomNavBarPainter extends CustomPainter {
+//   final int selectedIndex;
+//   final int totalItems;
 
-  BottomNavBarPainter(this.selectedIndex, this.totalItems);
+//   BottomNavBarPainter(this.selectedIndex, this.totalItems);
 
-  @override
-  void paint(Canvas canvas, Size size) {
-    // Draw white background
-    final backgroundPaint = Paint()
-      ..color = Colors.white
-      ..style = PaintingStyle.fill;
+//   @override
+//   void paint(Canvas canvas, Size size) {
+//     // Draw white background
+//     final backgroundPaint = Paint()
+//       ..color = Colors.white
+//       ..style = PaintingStyle.fill;
 
-    canvas.drawRect(
-      Rect.fromLTWH(0, 0, size.width, size.height),
-      backgroundPaint,
-    );
+//     canvas.drawRect(
+//       Rect.fromLTWH(0, 0, size.width, size.height),
+//       backgroundPaint,
+//     );
 
-    final paint = Paint()
-      ..color = Color(0xFFD9D9D9)
-      ..style = PaintingStyle.fill;
+//     final paint = Paint()
+//       ..color = Color(0xFFD9D9D9)
+//       ..style = PaintingStyle.fill;
 
-    final path = Path();
-    final segmentWidth = size.width / totalItems;
-    final circleRadius = 30.0;
-    final circleCenterX = segmentWidth * selectedIndex + segmentWidth / 2;
+//     final path = Path();
+//     final segmentWidth = size.width / totalItems;
+//     final circleRadius = 30.0;
+//     final circleCenterX = segmentWidth * selectedIndex + segmentWidth / 2;
 
-    path.moveTo(0, 0);
-    path.lineTo(circleCenterX - circleRadius - 10, 0);
+//     path.moveTo(0, 0);
+//     path.lineTo(circleCenterX - circleRadius - 10, 0);
 
-    path.quadraticBezierTo(
-      circleCenterX - circleRadius,
-      35,
-      circleCenterX,
-      35,
-    );
+//     path.quadraticBezierTo(
+//       circleCenterX - circleRadius,
+//       35,
+//       circleCenterX,
+//       35,
+//     );
 
-    path.quadraticBezierTo(
-      circleCenterX + circleRadius,
-      35,
-      circleCenterX + circleRadius + 10,
-      0,
-    );
+//     path.quadraticBezierTo(
+//       circleCenterX + circleRadius,
+//       35,
+//       circleCenterX + circleRadius + 10,
+//       0,
+//     );
 
-    path.lineTo(size.width, 0);
-    path.lineTo(size.width, size.height);
-    path.lineTo(0, size.height);
-    path.close();
+//     path.lineTo(size.width, 0);
+//     path.lineTo(size.width, size.height);
+//     path.lineTo(0, size.height);
+//     path.close();
 
-    canvas.drawPath(path, paint);
-  }
+//     canvas.drawPath(path, paint);
+//   }
 
-  @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) {
-    return true;
-  }
-}
+//   @override
+//   bool shouldRepaint(covariant CustomPainter oldDelegate) {
+//     return true;
+//   }
+// }
 
 class LessonTile extends StatelessWidget {
   final String title;

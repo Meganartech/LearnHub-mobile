@@ -31,6 +31,7 @@ class MyCertificateList extends StatefulWidget {
 class _MyCertificateListState extends State<MyCertificateList> {
   final _secureStorage = FlutterSecureStorage();
   List<dynamic> myCertificates = [];
+  bool isLoading = true;
 
   @override
   void initState() {
@@ -75,6 +76,7 @@ class _MyCertificateListState extends State<MyCertificateList> {
               'courseImage': courseImages[courseName] ?? '',
             };
           }).toList();
+          isLoading = false; // Mark fetch as done
         });
       } else {
         throw Exception('Failed to load certificates');
@@ -82,6 +84,9 @@ class _MyCertificateListState extends State<MyCertificateList> {
     } catch (e) {
       // ignore: avoid_print
       print('Error fetching certificates: $e');
+      setState(() {
+    isLoading = false; // Also stop loading on error
+  });
     }
   }
 
@@ -112,8 +117,22 @@ class _MyCertificateListState extends State<MyCertificateList> {
           onPressed: () => widget.onItemTapped(3), // Go back to Profile Page
         ),
       ),
-      body: myCertificates.isEmpty
-          ? Center(child: CircularProgressIndicator())
+      body: 
+      // myCertificates.isEmpty
+      //     ? Center(child: CircularProgressIndicator())
+      isLoading
+    ? const Center(child: CircularProgressIndicator())
+    : myCertificates.isEmpty
+        ? const Center(
+            child: Text(
+              'No certificates found',
+              style: TextStyle(
+                // fontSize: 18,
+                // fontWeight: FontWeight.bold,
+                fontFamily: 'Poppins',
+              ),
+            ),
+          )
           : GridView.builder(
               padding: EdgeInsets.all(Dimensions.fontSize(context, 16)),
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(

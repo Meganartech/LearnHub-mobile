@@ -11,6 +11,7 @@ import 'package:http/http.dart' as http;
 import '../url.dart';
 import 'WelcomePage.dart';
 import 'payment.dart';
+import 'trainer_selection_screen.dart';
 enum CourseFilter {
   all,
   free,
@@ -101,6 +102,7 @@ Future<void> _fetchUserId() async {
   Future<void> fetchUserProfile() async {
     try {
       final String? token = await storage.read(key: "token");
+      setState(() => isUserLoading = true);
       if (token == null)
         // ignore: curly_braces_in_flow_control_structures
         throw Exception("No token found. Please log in again.");
@@ -180,6 +182,7 @@ Future<void> fetchNotifications() async {
   Future<void> fetchCourses() async {
     try {
       final String? token = await storage.read(key: "token");
+      setState(() => isLoading = true);
       if (token == null) {
         throw Exception("No token found. Please log in again.");
       }
@@ -410,9 +413,20 @@ Future<Map<String, dynamic>?> getOrderSummary(int userId, int batchId, int payTy
 
   @override
   Widget build(BuildContext context) {
+    if (isLoading || isUserLoading) {
+      return Scaffold(
+        backgroundColor: Colors.white,
+        body: Center(
+          child: CircularProgressIndicator(
+            color: Color(0xFF4680FE),
+          ),
+        ),
+      );
+    }
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         toolbarHeight: 80, // Increased AppBar height
         backgroundColor: Colors.white, // Optional: Set background color
         elevation: 0, // Optional: Remove shadow
@@ -728,6 +742,12 @@ void _navigateToCourseDetail(Map<String, dynamic> course) {
       ),
     ),
   );
+// Navigator.push(
+//   context,
+//   MaterialPageRoute(
+//     builder: (context) => TrainerSelectionScreen(studentId: 17, courseId: 5),
+//   ),
+// );
 }
 
 Future<bool> _checkIfCourseIsPaid(String courseId) async {

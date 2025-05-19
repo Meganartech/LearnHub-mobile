@@ -393,11 +393,44 @@ Future<void> fetchBatchImages(List<Payment> loadedPayments, String token) async 
       ),
       body: isLoading
           ? const Center(child: CircularProgressIndicator())
-          :showPendingPayments
-              ? _buildPendingPaymentsList()
-              : _buildPaymentsList(),
+          // :showPendingPayments
+          //     ? _buildPendingPaymentsList()
+          //     : _buildPaymentsList(),
+          : _buildContent(),
     );
   }
+   Widget _buildContent() {
+  if (showPendingPayments) {
+    return pendingPayments.isEmpty
+        ? _buildEmptyState("No pending payments found")
+        : _buildPendingPaymentsList();
+  } else {
+    return payments.isEmpty
+        ? _buildEmptyState("No payments found")
+        : _buildPaymentsList();
+  }
+}
+
+Widget _buildEmptyState(String message) {
+  return Center(
+    child: Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Icon(Icons.payment, 
+        // size: 48, 
+        color: Colors.grey),
+        SizedBox(height: 16),
+        Text(
+          message,
+          style: TextStyle(
+            // fontSize: 18,
+            color: Colors.grey,
+          ),
+        ),
+      ],
+    ),
+  );
+}
   Widget _buildPaymentsList() {
     return ListView.builder(
       itemCount: payments.length,
@@ -639,12 +672,26 @@ class PendingPaymentDetailPage extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  _buildDetailRow(context, "Batch Name", payment.batchName),
+                  _buildDetailRow(context, "Course Name", payment.batchName),
                   _buildDetailRow(context, "Installment Number", payment.installmentNo.toString()),
                   _buildDetailRow(context, "Pending Amount", "₹${payment.amount}"),
                   _buildDetailRow(context, "Due Date", formattedDate),
-                  _buildDetailRow(context, "Batch ID", payment.bid),
+                  _buildDetailRow(context, "Course ID", payment.bid),
                   SizedBox(height: Dimensions.fontSize(context, 20)),
+                  // Center(
+                  //   child: ElevatedButton(
+                  //       style: ElevatedButton.styleFrom(
+                  //         backgroundColor: Color(0xFF4680FE),
+                  //         minimumSize: Size(20, Dimensions.fontSize(context, 40)),
+                  //         shape: RoundedRectangleBorder(
+                  //         borderRadius: BorderRadius.circular(8), // Adjust the radius as needed
+                  //       ),
+                  //       ),
+                  //       onPressed :(){},
+                  //        // Disable if no payment method is selectedisPaymentMethodSelected && !isProcessing ? processPayment : null, // Only enable if a payment method is selected//isProcessing ? null : processPayment,
+                  //       child: Text("Pay Now", style: TextStyle(color: Colors.white, fontSize: Dimensions.fontSize(context, 18), fontFamily: 'Open Sans', fontWeight: FontWeight.w600)),
+                  //     ),
+                  // ),
                 ],
               ),
             ),
@@ -741,7 +788,7 @@ class PaymentDetailPage extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  _buildPaymentDetailRow(context, "Batch Name", payment.courseName),
+                  _buildPaymentDetailRow(context, "Course Name", payment.courseName),
                   _buildPaymentDetailRow(context, "Installment Number", payment.installmentNumber.toString()),
                   _buildPaymentDetailRow(context, "Payment ID", payment.paymentId),
                   _buildPaymentDetailRow(context, "Order ID", payment.orderId),

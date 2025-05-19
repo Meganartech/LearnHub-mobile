@@ -388,6 +388,7 @@ Future<void> _loadMeetingsFromLocal() async {
 // Ensures AppBar always remains white
   PreferredSizeWidget _buildAppBar() {
     return AppBar(
+      automaticallyImplyLeading: false,
       backgroundColor: Colors.white,
       elevation: 0,
       title: Row(

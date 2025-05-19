@@ -188,7 +188,10 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                         {navigateToEditProfile = false,
                                         navigateToMyCourses = false,
                                         navigateToMyCertificates = false,
-                                        navigateToMyPayments = false}) {
+                                        navigateToMyPayments = false,
+                                        navigateToAssignments = false,
+                                        navigateToAttendance = false,
+                                        navigateToGrades = false}) {
                                       // Implement navigation handling if needed
                                     },
                                   )), // Navigate to ProfilePage
@@ -301,6 +304,7 @@ class _EditProfilePageContentState extends State<EditProfilePageContent> {
   @override
   void initState() {
     super.initState();
+    _isLoading = true;
     fetchUserData();
   }
 
@@ -392,6 +396,7 @@ class _EditProfilePageContentState extends State<EditProfilePageContent> {
 
     if (token == null || email == null) {
       debugPrint("User not authenticated");
+      setState(() => _isLoading = false);
       return;
     }
 
@@ -432,7 +437,9 @@ class _EditProfilePageContentState extends State<EditProfilePageContent> {
       }
     } catch (e) {
       debugPrint("Network error: $e");
-    }
+    } finally {
+    setState(() => _isLoading = false); // Hide loading indicator when done
+  }
   }
 
   Widget _buildProfilePicture() {
@@ -582,7 +589,7 @@ if (_selectedImage != null) {
   @override
   Widget build(BuildContext context) {
     return _isLoading
-        ? Center(child: CircularProgressIndicator(color: Color(0xFF4680FE)))
+        ? Center(child: CircularProgressIndicator())//color: Color(0xFF4680FE)))
         : SingleChildScrollView(
             child: Padding(
               padding: EdgeInsets.all(Dimensions.fontSize(context, 16)),

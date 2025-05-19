@@ -3,9 +3,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import 'AssignmentScreen.dart';
+import 'AttendanceScreen.dart';
 import 'CourseDetailPage.dart';
 import 'CourseListPage.dart';
 import 'EditProfilePage.dart';
+import 'GradesScreen.dart';
 import 'MeetingPage.dart';
 import 'MyCertificatesPage.dart';
 import 'MyCoursesPage.dart';
@@ -63,6 +66,9 @@ class _HomeScreenState extends State<HomeScreen> {
       bool navigateToMyCertificates = false,
       bool navigateToCertificatesTemplate = false,
       bool navigateToMyPayments = false,
+      bool navigateToAssignments = false,
+      bool navigateToAttendance = false,
+      bool navigateToGrades = false,
       String? activityId}) {
     setState(() {
       if (index == 1 && navigateToDetails) {
@@ -95,6 +101,28 @@ class _HomeScreenState extends State<HomeScreen> {
           onItemTapped: _onItemTapped,
         );
       }
+      else if (index == 3 && navigateToAssignments) {
+        // Navigate to MyCoursesPage
+        _pages[3] = AssignmentScreen(
+          selectedIndex: 3,
+          onItemTapped: _onItemTapped,
+        );
+      }
+      else if (index == 3 && navigateToAttendance) {
+        // Navigate to MyCoursesPage
+        _pages[3] = AttendanceScreen(
+          selectedIndex: 3,
+          onItemTapped: _onItemTapped,
+        );
+      }
+      else if (index == 3 && navigateToGrades) {
+        // Navigate to MyCoursesPage
+        _pages[3] = GradesScreen(
+          selectedIndex: 3,
+          onItemTapped: _onItemTapped,
+        );
+      }
+      
       else if (index == 3 && navigateToMyCertificates) {
   _pages[3] = MyCertificateList(
     selectedIndex: 3,

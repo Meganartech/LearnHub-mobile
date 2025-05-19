@@ -14,7 +14,10 @@ class ProfilePage extends StatefulWidget {
       {bool navigateToEditProfile,
       bool navigateToMyCourses,
       bool navigateToMyCertificates,
-      bool navigateToMyPayments}) onItemTapped;
+      bool navigateToMyPayments,
+      bool navigateToAssignments,
+      bool navigateToAttendance,
+      bool navigateToGrades}) onItemTapped;
 
   // ignore: prefer_const_constructors_in_immutables
   ProfilePage({
@@ -32,6 +35,8 @@ class _ProfilePageState extends State<ProfilePage> {
   final FlutterSecureStorage storage = FlutterSecureStorage();
   String profileImage = '';
   String userName = '';
+  bool _isLoading = true;
+  
 
   @override
   void initState() {
@@ -42,7 +47,10 @@ class _ProfilePageState extends State<ProfilePage> {
   Future<void> _fetchProfileDetails() async {
     try {
       String? token = await storage.read(key: "token");
-      if (token == null) return;
+      if (token == null) {
+      setState(() => _isLoading = false);
+      return;
+    }
 
       final response = await http.get(
         Uri.parse("$baseUrl/Edit/profiledetails"),
@@ -56,12 +64,15 @@ class _ProfilePageState extends State<ProfilePage> {
           userName = responseData["name"] ?? "User";
           profileImage =
               responseData["profileImage"] ?? ''; // Base64 profile image
+              _isLoading = false;
         });
       } else {
         debugPrint("Error fetching profile details: ${response.body}");
+        setState(() => _isLoading = false);
       }
     } catch (e) {
       debugPrint("Profile Fetch Error: $e");
+      setState(() => _isLoading = false);
     }
   }
 
@@ -102,7 +113,13 @@ class _ProfilePageState extends State<ProfilePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      body: SingleChildScrollView(
+      body: _isLoading
+          ? Center(
+              child: CircularProgressIndicator(
+               // color: Color(0xFF4680FE),
+              ),
+            )
+          : SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
@@ -178,6 +195,21 @@ class _ProfilePageState extends State<ProfilePage> {
                 text: "My Payments",
                 onTap: () =>
                     widget.onItemTapped(3, navigateToMyPayments: true)),
+            ProfileOption(
+                icon: Icons.assignment_rounded,
+                text: "Assignments",
+                onTap: () =>
+                    widget.onItemTapped(3, navigateToAssignments: true)),
+            ProfileOption(
+                icon: Icons.assignment_ind_rounded,
+                text: "Attendance",
+                onTap: () =>
+                    widget.onItemTapped(3, navigateToAttendance: true)),
+            ProfileOption(
+                icon: Icons.badge_rounded,
+                text: "Grade",
+                onTap: () =>
+                    widget.onItemTapped(3, navigateToGrades: true)),
             SizedBox(height: Dimensions.fontSize(context, 20)),
             TextButton(
               onPressed: () => _logout(context),

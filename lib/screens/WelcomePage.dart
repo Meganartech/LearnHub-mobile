@@ -119,6 +119,7 @@ Future<void> fetchAllCourses() async {
   Future<void> fetchUserProfile() async {
     try {
       final String? token = await storage.read(key: "token");
+      setState(() => isUserLoading = true);
       if (token == null) throw Exception("No token found. Please log in again.");
 
       final response = await http.get(
@@ -344,9 +345,20 @@ Future<void> fetchAllCourses() async {
 
   @override
   Widget build(BuildContext context) {
+    if (isLoading || isUserLoading) {
+      return Scaffold(
+        backgroundColor: Colors.white,
+        body: Center(
+          child: CircularProgressIndicator(
+            color: Color(0xFF4680FE),
+          ),
+        ),
+      );
+    }
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
+        automaticallyImplyLeading: false, // hides the back arrow
         // toolbarHeight: 80,
         toolbarHeight: Dimensions.fontSize(context, 80),
         backgroundColor: Colors.white,
@@ -453,7 +465,8 @@ Future<void> fetchAllCourses() async {
                       context,
                     ))
               else
-                Text("No new notifications", style: TextStyle(fontSize: Dimensions.fontSize(context, 14), color: Colors.grey)),
+              SizedBox(height: Dimensions.fontSize(context, 120)),
+                Center(child: Text("No new notifications", style: TextStyle(fontSize: Dimensions.fontSize(context, 14), color: Colors.grey))),
             ],
           ),
         ),
